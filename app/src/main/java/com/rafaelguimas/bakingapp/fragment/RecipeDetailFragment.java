@@ -1,4 +1,4 @@
-package com.rafaelguimas.bakingapp;
+package com.rafaelguimas.bakingapp.fragment;
 
 import android.app.Activity;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -9,6 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.rafaelguimas.bakingapp.R;
+import com.rafaelguimas.bakingapp.activity.RecipeDetailActivity;
+import com.rafaelguimas.bakingapp.activity.RecipeListActivity;
 import com.rafaelguimas.bakingapp.dummy.DummyContent;
 
 /**
