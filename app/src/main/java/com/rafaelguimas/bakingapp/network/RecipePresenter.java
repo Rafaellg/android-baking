@@ -39,6 +39,10 @@ public class RecipePresenter {
         retrofit.create(RecipesService.class).getRecipes().enqueue(new Callback<List<Recipe>>() {
             @Override
             public void onResponse(Call<List<Recipe>> call, Response<List<Recipe>> response) {
+                response.body().get(0).setImage("http://del.h-cdn.co/assets/16/32/1600x800/landscape-1470773544-delish-nutella-cool-whip-pie-1.jpg");
+                response.body().get(1).setImage("http://d2gk7xgygi98cy.cloudfront.net/4-3-large.jpg");
+                response.body().get(2).setImage("https://dessertswithbenefits.com/wp-content/uploads/2014/01/33.jpg");
+                response.body().get(3).setImage("https://www.petitgastro.com.br/wp-content/uploads/2016/04/final2-Medium-1024x682.jpg");
                 mRecipePresenterCallback.notifyServiceSuccess(response.body());
             }
 

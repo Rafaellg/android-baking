@@ -5,11 +5,13 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.Toast;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.rafaelguimas.bakingapp.R;
-import com.rafaelguimas.bakingapp.fragment.RecipeDetailFragment;
 import com.rafaelguimas.bakingapp.adapter.RecipesListAdapter;
+import com.rafaelguimas.bakingapp.fragment.RecipeDetailFragment;
 import com.rafaelguimas.bakingapp.models.Recipe;
 import com.rafaelguimas.bakingapp.network.RecipePresenter;
 
@@ -24,6 +26,8 @@ public class RecipeListActivity extends AppCompatActivity implements RecipePrese
     Toolbar toolbar;
     @BindView(R.id.recipe_list)
     RecyclerView recyclerView;
+    @BindView(R.id.av_loader)
+    LottieAnimationView avLoader;
 
     private boolean mTwoPane;
 
@@ -58,7 +62,8 @@ public class RecipeListActivity extends AppCompatActivity implements RecipePrese
 
     @Override
     public void notifyServiceSuccess(List<Recipe> recipeList) {
-        Toast.makeText(this, "YES! " + recipeList.size(), Toast.LENGTH_SHORT).show();
+        // Hide loader
+        avLoader.setVisibility(View.GONE);
 
         assert recyclerView != null;
         setupRecyclerView(recipeList);
@@ -66,7 +71,8 @@ public class RecipeListActivity extends AppCompatActivity implements RecipePrese
 
     @Override
     public void notifyServiceError() {
-        Toast.makeText(this, "DEU RUIM!", Toast.LENGTH_SHORT).show();
+        // Show empty animation
+        avLoader.setAnimation("shrug.json");
     }
 
     @Override

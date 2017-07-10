@@ -53,7 +53,7 @@ public class RecipeDetailFragment extends Fragment {
         ButterKnife.bind(this, rootView);
 
         if (mItem != null) {
-            RecipeDetailViewPagerAdapter adapter = new RecipeDetailViewPagerAdapter(getFragmentManager(), mItem);
+            RecipeDetailViewPagerAdapter adapter = new RecipeDetailViewPagerAdapter(getFragmentManager(), mItem, getContext());
             vwOptions.setAdapter(adapter);
 
             tlOptions.setupWithViewPager(vwOptions);

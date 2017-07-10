@@ -12,13 +12,15 @@
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:theme="@style/AppTheme.AppBarOverlay"
+        app:elevation="0dp">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            app:elevation="0dp"/>
 
     </android.support.design.widget.AppBarLayout>
 
@@ -28,7 +30,16 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <include layout="@layout/recipe_list" />
+        <include layout="@layout/recipe_list"/>
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/av_loader"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:layout_gravity="center"
+            app:lottie_fileName="loader_ring.json"
+            app:lottie_loop="true"
+            app:lottie_autoPlay="true" />
 
     </FrameLayout>
 

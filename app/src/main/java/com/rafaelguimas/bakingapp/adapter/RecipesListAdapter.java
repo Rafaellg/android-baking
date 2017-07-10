@@ -4,8 +4,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.rafaelguimas.bakingapp.R;
 import com.rafaelguimas.bakingapp.models.Recipe;
 
@@ -37,7 +39,9 @@ public class RecipesListAdapter extends RecyclerView.Adapter<RecipesListAdapter.
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
+
         holder.mTvRecipeTitle.setText(mValues.get(position).getName());
+        Glide.with(holder.itemView.getContext()).load(holder.mItem.getImage()).into(holder.ivBackground);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,6 +59,8 @@ public class RecipesListAdapter extends RecyclerView.Adapter<RecipesListAdapter.
     class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.tv_recipe_title)
         TextView mTvRecipeTitle;
+        @BindView(R.id.iv_background)
+        ImageView ivBackground;
 
         public Recipe mItem;
 
