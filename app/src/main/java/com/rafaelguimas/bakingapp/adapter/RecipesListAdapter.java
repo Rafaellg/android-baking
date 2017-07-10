@@ -42,7 +42,7 @@ public class RecipesListAdapter extends RecyclerView.Adapter<RecipesListAdapter.
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mOnItemClick.notifyOnItemClick(holder.mItem);
+                mOnItemClick.notifyOnRecipeItemClick(holder.mItem);
             }
         });
     }
@@ -65,6 +65,6 @@ public class RecipesListAdapter extends RecyclerView.Adapter<RecipesListAdapter.
     }
 
     public interface OnItemClick {
-        void notifyOnItemClick(Recipe recipe);
+        void notifyOnRecipeItemClick(Recipe recipe);
     }
 }

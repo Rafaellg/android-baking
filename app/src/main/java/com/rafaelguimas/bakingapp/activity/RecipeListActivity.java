@@ -70,10 +70,10 @@ public class RecipeListActivity extends AppCompatActivity implements RecipePrese
     }
 
     @Override
-    public void notifyOnItemClick(Recipe recipe) {
+    public void notifyOnRecipeItemClick(Recipe recipe) {
         if (mTwoPane) {
             Bundle arguments = new Bundle();
-            arguments.putParcelable(RecipeDetailFragment.ARG_ITEM_ID, recipe);
+            arguments.putParcelable(RecipeDetailFragment.ARG_ITEM, recipe);
             RecipeDetailFragment fragment = new RecipeDetailFragment();
             fragment.setArguments(arguments);
             getSupportFragmentManager().beginTransaction()
@@ -81,7 +81,7 @@ public class RecipeListActivity extends AppCompatActivity implements RecipePrese
                     .commit();
         } else {
             Intent intent = new Intent(this, RecipeDetailActivity.class);
-            intent.putExtra(RecipeDetailFragment.ARG_ITEM_ID, recipe);
+            intent.putExtra(RecipeDetailFragment.ARG_ITEM, recipe);
 
             startActivity(intent);
         }

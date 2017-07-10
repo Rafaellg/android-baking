@@ -6,6 +6,7 @@
     android:name="com.rafaelguimas.bakingapp.RecipeListFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorBackground"
     app:layoutManager="LinearLayoutManager"
     tools:context="com.rafaelguimas.bakingapp.activity.RecipeListActivity"
     tools:listitem="@layout/recipe_list_content" />

@@ -1,41 +1,33 @@
 package com.rafaelguimas.bakingapp.fragment;
 
 import android.app.Activity;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.rafaelguimas.bakingapp.R;
-import com.rafaelguimas.bakingapp.activity.RecipeDetailActivity;
-import com.rafaelguimas.bakingapp.activity.RecipeListActivity;
-import com.rafaelguimas.bakingapp.dummy.DummyContent;
+import com.rafaelguimas.bakingapp.adapter.RecipeDetailViewPagerAdapter;
+import com.rafaelguimas.bakingapp.models.Recipe;
 
-/**
- * A fragment representing a single Recipe detail screen.
- * This fragment is either contained in a {@link RecipeListActivity}
- * in two-pane mode (on tablets) or a {@link RecipeDetailActivity}
- * on handsets.
- */
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class RecipeDetailFragment extends Fragment {
-    /**
-     * The fragment argument representing the item ID that this fragment
-     * represents.
-     */
-    public static final String ARG_ITEM_ID = "item_id";
 
-    /**
-     * The dummy content this fragment is presenting.
-     */
-    private DummyContent.DummyItem mItem;
+    public static final String ARG_ITEM = "item_recipe";
 
-    /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
-     */
+    @BindView(R.id.tl_options)
+    TabLayout tlOptions;
+    @BindView(R.id.vw_options)
+    ViewPager vwOptions;
+
+    private Recipe mItem;
+
     public RecipeDetailFragment() {
     }
 
@@ -43,28 +35,28 @@ public class RecipeDetailFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (getArguments().containsKey(ARG_ITEM_ID)) {
-            // Load the dummy content specified by the fragment
-            // arguments. In a real-world scenario, use a Loader
-            // to load content from a content provider.
-            mItem = DummyContent.ITEM_MAP.get(getArguments().getString(ARG_ITEM_ID));
+        if (getArguments().containsKey(ARG_ITEM)) {
+            mItem = getArguments().getParcelable(ARG_ITEM);
 
             Activity activity = this.getActivity();
-            CollapsingToolbarLayout appBarLayout = (CollapsingToolbarLayout) activity.findViewById(R.id.toolbar_layout);
+            CollapsingToolbarLayout appBarLayout = activity.findViewById(R.id.toolbar_layout);
             if (appBarLayout != null) {
-                appBarLayout.setTitle(mItem.content);
+                appBarLayout.setTitle(mItem.getName());
             }
         }
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.recipe_detail, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View rootView = inflater.inflate(R.layout.fragment_recipe_detail, container, false);
 
-        // Show the dummy content as text in a TextView.
+        ButterKnife.bind(this, rootView);
+
         if (mItem != null) {
-            ((TextView) rootView.findViewById(R.id.recipe_detail)).setText(mItem.details);
+            RecipeDetailViewPagerAdapter adapter = new RecipeDetailViewPagerAdapter(getFragmentManager(), mItem);
+            vwOptions.setAdapter(adapter);
+
+            tlOptions.setupWithViewPager(vwOptions);
         }
 
         return rootView;

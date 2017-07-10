@@ -8,7 +8,8 @@
     android:divider="?android:attr/dividerHorizontal"
     android:orientation="horizontal"
     android:showDividers="middle"
-    tools:context="com.rafaelguimas.bakingapp.activity.RecipeListActivity">
+    tools:context="com.rafaelguimas.bakingapp.activity.RecipeListActivity"
+    android:background="@color/colorBackground">
 
     <!--
     This layout is a two-pane layout for the Recipes

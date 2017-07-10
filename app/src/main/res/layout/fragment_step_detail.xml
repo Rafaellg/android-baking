@@ -1,0 +1,79 @@
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground"
+    android:orientation="vertical"
+    tools:context="com.rafaelguimas.bakingapp.fragment.StepDetailFragment">
+
+    <com.google.android.exoplayer2.ui.SimpleExoPlayerView
+        android:id="@+id/exoplayer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:minHeight="200dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:resize_mode="fixed_width" />
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cv_description"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        app:layout_constraintLeft_toLeftOf="@+id/exoplayer"
+        app:layout_constraintRight_toRightOf="@+id/exoplayer"
+        app:layout_constraintTop_toBottomOf="@+id/exoplayer">
+
+        <TextView
+            android:id="@+id/tv_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="Lorem ipsum dolor"
+            android:padding="16dp" />
+
+    </android.support.v7.widget.CardView>
+
+    <TextView
+        android:id="@+id/tv_previously_step"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="8dp"
+        android:drawableStart="@drawable/ic_navigate_before_black_24dp"
+        android:gravity="center"
+        android:paddingBottom="8dp"
+        android:paddingTop="8dp"
+        android:text="@string/label_previously_step"
+        android:textAllCaps="true"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="@id/cv_description"
+        app:layout_constraintTop_toBottomOf="@+id/cv_description"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/tv_next_step"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:drawableEnd="@drawable/ic_navigate_next_black_24dp"
+        android:gravity="center"
+        android:paddingBottom="8dp"
+        android:paddingTop="8dp"
+        android:text="@string/label_next_step"
+        android:textAllCaps="true"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintLeft_toRightOf="@+id/tv_previously_step"
+        app:layout_constraintRight_toRightOf="@id/cv_description"
+        app:layout_constraintTop_toBottomOf="@+id/cv_description"
+        app:layout_constraintVertical_bias="1.0" />
+
+
+</android.support.constraint.ConstraintLayout>
