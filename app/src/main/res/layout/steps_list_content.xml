@@ -16,7 +16,7 @@
             android:id="@+id/tv_id"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:background="@drawable/bg_round"
+            android:background="@drawable/bg_circle_accent"
             android:gravity="center"
             android:textColor="@android:color/white"
             android:textStyle="bold"

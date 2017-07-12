@@ -62,7 +62,6 @@ public class IngredientListFragment extends Fragment {
             IngredientsListAdapter ingredientsListAdapter = new IngredientsListAdapter(mIngredientList);
 
             // Setup RV
-            rvIngredients.setNestedScrollingEnabled(false);
             rvIngredients.setAdapter(ingredientsListAdapter);
             rvIngredients.setLayoutManager(new LinearLayoutManager(getContext()));
         }

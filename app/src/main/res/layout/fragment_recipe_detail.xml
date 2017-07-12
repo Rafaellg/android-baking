@@ -25,14 +25,12 @@
             android:id="@+id/tl_options"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
+            android:elevation="8dp"
             app:layout_constraintLeft_toLeftOf="@+id/iv_background"
             app:layout_constraintRight_toRightOf="@+id/iv_background"
             app:layout_constraintTop_toBottomOf="@+id/iv_background"
-            app:tabGravity="center"
-            app:tabMode="fixed"
-            app:tabSelectedTextColor="@android:color/white"
-            app:tabTextColor="@android:color/white">
+            app:tabGravity="fill"
+            app:tabMode="fixed">
 
             <android.support.design.widget.TabItem
                 android:id="@+id/tab_ingredients"
@@ -49,7 +47,6 @@
         </android.support.design.widget.TabLayout>
 
         <android.support.v4.view.ViewPager
-            android:background="@color/colorPrimary"
             android:id="@+id/vw_options"
             android:layout_width="0dp"
             android:layout_height="0dp"
