@@ -61,13 +61,10 @@ public class IngredientListFragment extends Fragment {
             // Create the adapters
             IngredientsListAdapter ingredientsListAdapter = new IngredientsListAdapter(mIngredientList);
 
-            // Setup RVs with adapters
+            // Setup RV
+            rvIngredients.setNestedScrollingEnabled(false);
             rvIngredients.setAdapter(ingredientsListAdapter);
             rvIngredients.setLayoutManager(new LinearLayoutManager(getContext()));
-
-            // Add the divider to the ingredients RV
-            RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
-            rvIngredients.addItemDecoration(itemDecoration);
         }
 
         return view;

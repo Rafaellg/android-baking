@@ -6,18 +6,27 @@ import android.support.v7.widget.Toolbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.rafaelguimas.bakingapp.R;
 import com.rafaelguimas.bakingapp.fragment.RecipeDetailFragment;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class RecipeDetailActivity extends AppCompatActivity {
+
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_detail);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.detail_toolbar);
+        ButterKnife.bind(this);
+
         setSupportActionBar(toolbar);
 
         // Show the Up button in the action bar.

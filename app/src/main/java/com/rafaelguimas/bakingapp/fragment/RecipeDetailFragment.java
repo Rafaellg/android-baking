@@ -2,14 +2,16 @@ package com.rafaelguimas.bakingapp.fragment;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.rafaelguimas.bakingapp.R;
 import com.rafaelguimas.bakingapp.adapter.RecipeDetailViewPagerAdapter;
 import com.rafaelguimas.bakingapp.models.Recipe;
@@ -21,6 +23,8 @@ public class RecipeDetailFragment extends Fragment {
 
     public static final String ARG_ITEM = "item_recipe";
 
+    @BindView(R.id.iv_background)
+    ImageView ivBackground;
     @BindView(R.id.tl_options)
     TabLayout tlOptions;
     @BindView(R.id.vw_options)
@@ -39,9 +43,9 @@ public class RecipeDetailFragment extends Fragment {
             mItem = getArguments().getParcelable(ARG_ITEM);
 
             Activity activity = this.getActivity();
-            CollapsingToolbarLayout appBarLayout = activity.findViewById(R.id.toolbar_layout);
-            if (appBarLayout != null) {
-                appBarLayout.setTitle(mItem.getName());
+            Toolbar toolbar = activity.findViewById(R.id.toolbar);
+            if (toolbar != null) {
+                toolbar.setTitle(mItem.getName());
             }
         }
     }
@@ -53,9 +57,12 @@ public class RecipeDetailFragment extends Fragment {
         ButterKnife.bind(this, rootView);
 
         if (mItem != null) {
+            // Set the background image
+            Glide.with(this).load(mItem.getImage()).into(ivBackground);
+
+            // Set the VW adapter
             RecipeDetailViewPagerAdapter adapter = new RecipeDetailViewPagerAdapter(getFragmentManager(), mItem, getContext());
             vwOptions.setAdapter(adapter);
-
             tlOptions.setupWithViewPager(vwOptions);
         }
 

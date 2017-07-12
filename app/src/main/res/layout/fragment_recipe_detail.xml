@@ -4,47 +4,59 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorBackground"
+    android:fillViewport="true"
     tools:context="com.rafaelguimas.bakingapp.fragment.RecipeDetailFragment">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <ImageView
+            android:id="@+id/iv_background"
+            android:layout_width="0dp"
+            android:layout_height="240dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/img_burguer"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <android.support.design.widget.TabLayout
             android:id="@+id/tl_options"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:tabMode="fixed"
-            app:tabGravity="center"
             android:background="@color/colorPrimary"
-            app:tabTextColor="@android:color/white"
+            app:layout_constraintLeft_toLeftOf="@+id/iv_background"
+            app:layout_constraintRight_toRightOf="@+id/iv_background"
+            app:layout_constraintTop_toBottomOf="@+id/iv_background"
+            app:tabGravity="center"
+            app:tabMode="fixed"
             app:tabSelectedTextColor="@android:color/white"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:tabTextColor="@android:color/white">
 
             <android.support.design.widget.TabItem
                 android:id="@+id/tab_ingredients"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/label_ingredients"/>
+                android:text="@string/label_ingredients" />
 
             <android.support.design.widget.TabItem
                 android:id="@+id/tab_steps"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/label_steps"/>
+                android:text="@string/label_steps" />
 
         </android.support.design.widget.TabLayout>
 
         <android.support.v4.view.ViewPager
+            android:background="@color/colorPrimary"
             android:id="@+id/vw_options"
             android:layout_width="0dp"
-            android:layout_height="300dp"
-            app:layout_constraintTop_toBottomOf="@id/tl_options"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintTop_toBottomOf="@+id/tl_options" />
 
     </android.support.constraint.ConstraintLayout>
 
