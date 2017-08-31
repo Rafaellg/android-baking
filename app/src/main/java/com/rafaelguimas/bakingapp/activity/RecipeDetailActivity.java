@@ -10,12 +10,13 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.rafaelguimas.bakingapp.R;
+import com.rafaelguimas.bakingapp.ToolbarControlView;
 import com.rafaelguimas.bakingapp.fragment.RecipeDetailFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class RecipeDetailActivity extends AppCompatActivity {
+public class RecipeDetailActivity extends AppCompatActivity implements ToolbarControlView {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -56,5 +57,10 @@ public class RecipeDetailActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void setToolbarTitle(String title) {
+        getSupportActionBar().setTitle(title);
     }
 }

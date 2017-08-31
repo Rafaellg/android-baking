@@ -1,11 +1,10 @@
 package com.rafaelguimas.bakingapp.fragment;
 
-import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
-import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,24 +12,29 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.rafaelguimas.bakingapp.R;
-import com.rafaelguimas.bakingapp.adapter.RecipeDetailViewPagerAdapter;
+import com.rafaelguimas.bakingapp.ToolbarControlView;
+import com.rafaelguimas.bakingapp.adapter.IngredientsListAdapter;
+import com.rafaelguimas.bakingapp.adapter.StepsListAdapter;
 import com.rafaelguimas.bakingapp.models.Recipe;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class RecipeDetailFragment extends Fragment {
+public class RecipeDetailFragment extends Fragment implements StepsListAdapter.OnStepItemClick {
 
     public static final String ARG_ITEM = "item_recipe";
 
     @BindView(R.id.iv_background)
     ImageView ivBackground;
-    @BindView(R.id.tl_options)
-    TabLayout tlOptions;
-    @BindView(R.id.vw_options)
-    ViewPager vwOptions;
+    @BindView(R.id.rv_steps)
+    RecyclerView rvSteps;
+    @BindView(R.id.rv_ingredients)
+    RecyclerView rvIngredients;
 
-    private Recipe mItem;
+    private Recipe mRecipe;
+    private ToolbarControlView mListener;
 
     public RecipeDetailFragment() {
     }
@@ -40,32 +44,66 @@ public class RecipeDetailFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         if (getArguments().containsKey(ARG_ITEM)) {
-            mItem = getArguments().getParcelable(ARG_ITEM);
-
-            Activity activity = this.getActivity();
-            Toolbar toolbar = activity.findViewById(R.id.toolbar);
-            if (toolbar != null) {
-                toolbar.setTitle(mItem.getName());
-            }
+            mRecipe = getArguments().getParcelable(ARG_ITEM);
         }
+
+        // Set recipe name as toolbar title
+        mListener.setToolbarTitle(mRecipe.getName());
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_recipe_detail, container, false);
 
+        // Map the view items
         ButterKnife.bind(this, rootView);
 
-        if (mItem != null) {
-            // Set the background image
-            Glide.with(this).load(mItem.getImage()).into(ivBackground);
+        // Set the background image
+        Glide.with(this).load(mRecipe.getImage()).into(ivBackground);
 
-            // Set the VW adapter
-            RecipeDetailViewPagerAdapter adapter = new RecipeDetailViewPagerAdapter(getFragmentManager(), mItem, getContext());
-            vwOptions.setAdapter(adapter);
-            tlOptions.setupWithViewPager(vwOptions);
+        if (mRecipe.getIngredients() != null) {
+            // Create the adapters
+            IngredientsListAdapter ingredientsListAdapter = new IngredientsListAdapter(mRecipe.getIngredients());
+
+            // Setup RV
+            rvIngredients.setAdapter(ingredientsListAdapter);
+            rvIngredients.setLayoutManager(new LinearLayoutManager(getContext()));
+        }
+
+        if (mRecipe.getSteps() != null) {
+            // Create the adapter
+            StepsListAdapter stepsListAdapter = new StepsListAdapter(mRecipe.getSteps(), this);
+
+            // Setup RVs
+            rvSteps.setAdapter(stepsListAdapter);
+            rvSteps.setLayoutManager(new LinearLayoutManager(getContext()));
         }
 
         return rootView;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof ToolbarControlView) {
+            mListener = (ToolbarControlView) context;
+        } else {
+            throw new RuntimeException(context.toString() + " must implement " + ToolbarControlView.class.getName());
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
+    }
+
+    @Override
+    public void notifyOnStepItemClick(int selectedPosition) {
+        getFragmentManager()
+                .beginTransaction()
+                .replace(R.id.recipe_detail_container, StepDetailFragment.newInstance(new ArrayList<>(mRecipe.getSteps()), selectedPosition))
+                .addToBackStack(null)
+                .commit();
     }
 }

@@ -2,6 +2,7 @@ package com.rafaelguimas.bakingapp.network;
 
 import com.rafaelguimas.bakingapp.models.Recipe;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -36,9 +37,9 @@ public class RecipePresenter {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        retrofit.create(RecipesService.class).getRecipes().enqueue(new Callback<List<Recipe>>() {
+        retrofit.create(RecipesService.class).getRecipes().enqueue(new Callback<ArrayList<Recipe>>() {
             @Override
-            public void onResponse(Call<List<Recipe>> call, Response<List<Recipe>> response) {
+            public void onResponse(Call<ArrayList<Recipe>> call, Response<ArrayList<Recipe>> response) {
                 response.body().get(0).setImage("http://del.h-cdn.co/assets/16/32/1600x800/landscape-1470773544-delish-nutella-cool-whip-pie-1.jpg");
                 response.body().get(1).setImage("http://d2gk7xgygi98cy.cloudfront.net/4-3-large.jpg");
                 response.body().get(2).setImage("https://dessertswithbenefits.com/wp-content/uploads/2014/01/33.jpg");
@@ -47,7 +48,7 @@ public class RecipePresenter {
             }
 
             @Override
-            public void onFailure(Call<List<Recipe>> call, Throwable t) {
+            public void onFailure(Call<ArrayList<Recipe>> call, Throwable t) {
                 mRecipePresenterCallback.notifyServiceError();
             }
         });

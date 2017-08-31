@@ -7,54 +7,78 @@
     android:fillViewport="true"
     tools:context="com.rafaelguimas.bakingapp.fragment.RecipeDetailFragment">
 
-    <android.support.constraint.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <ImageView
             android:id="@+id/iv_background"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="240dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/img_burguer"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:src="@drawable/img_burguer" />
 
-        <android.support.design.widget.TabLayout
-            android:id="@+id/tl_options"
-            android:layout_width="0dp"
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:elevation="8dp"
-            app:layout_constraintLeft_toLeftOf="@+id/iv_background"
-            app:layout_constraintRight_toRightOf="@+id/iv_background"
-            app:layout_constraintTop_toBottomOf="@+id/iv_background"
-            app:tabGravity="fill"
-            app:tabMode="fixed">
+            android:layout_margin="8dp"
+            app:cardUseCompatPadding="true">
 
-            <android.support.design.widget.TabItem
-                android:id="@+id/tab_ingredients"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/label_ingredients" />
+                android:orientation="vertical"
+                android:padding="16dp">
 
-            <android.support.design.widget.TabItem
-                android:id="@+id/tab_steps"
-                android:layout_width="wrap_content"
+                <TextView
+                    style="@style/TextTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:text="@string/label_ingredients" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_ingredients"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:listitem="@layout/ingredient_list_content" />
+
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            app:cardUseCompatPadding="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/label_steps" />
+                android:orientation="vertical"
+                android:padding="16dp">
 
-        </android.support.design.widget.TabLayout>
+                <TextView
+                    style="@style/TextTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:text="@string/label_steps" />
 
-        <android.support.v4.view.ViewPager
-            android:id="@+id/vw_options"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tl_options" />
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_steps"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:listitem="@layout/steps_list_content" />
 
-    </android.support.constraint.ConstraintLayout>
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+    </LinearLayout>
 
 </android.support.v4.widget.NestedScrollView>

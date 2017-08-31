@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.rafaelguimas.bakingapp.R;
@@ -30,6 +29,7 @@ public class RecipeListActivity extends AppCompatActivity implements RecipePrese
     LottieAnimationView avLoader;
 
     private boolean mTwoPane;
+    private List<Recipe> mRecipeList;
 
     private RecipePresenter mRecipesPresenter;
 
@@ -52,8 +52,12 @@ public class RecipeListActivity extends AppCompatActivity implements RecipePrese
         }
 
         // Call service
-        mRecipesPresenter = new RecipePresenter(this);
-        mRecipesPresenter.getRecipes();
+        if (mRecipeList == null) {
+            mRecipesPresenter = new RecipePresenter(this);
+            mRecipesPresenter.getRecipes();
+        } else {
+            notifyServiceSuccess(mRecipeList);
+        }
     }
 
     private void setupRecyclerView(List<Recipe> recipeList) {
@@ -64,6 +68,8 @@ public class RecipeListActivity extends AppCompatActivity implements RecipePrese
     public void notifyServiceSuccess(List<Recipe> recipeList) {
         // Hide loader
         avLoader.setVisibility(View.GONE);
+
+        mRecipeList = recipeList;
 
         assert recyclerView != null;
         setupRecyclerView(recipeList);

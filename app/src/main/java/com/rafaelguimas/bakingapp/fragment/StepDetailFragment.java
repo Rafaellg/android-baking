@@ -29,12 +29,17 @@ import com.google.android.exoplayer2.util.Util;
 import com.rafaelguimas.bakingapp.R;
 import com.rafaelguimas.bakingapp.models.Step;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class StepDetailFragment extends Fragment {
 
-    private static final String ARG_ITEM = "item_step";
+    private static final String ARG_STEP_LIST = "arg_step_list";
+    private static final String ARG_SELECTED_POSITION = "arg_selected_position";
 
     @BindView(R.id.exoplayer)
     SimpleExoPlayerView exoplayer;
@@ -45,17 +50,19 @@ public class StepDetailFragment extends Fragment {
     @BindView(R.id.tv_next_step)
     TextView tvNextStep;
 
-    private Step mItem;
+    private List<Step> mStepList;
+    private int mSelectedPosition;
     private SimpleExoPlayer mPlayer;
 
     public StepDetailFragment() {
         // Required empty public constructor
     }
 
-    public static StepDetailFragment newInstance(Step item) {
+    public static StepDetailFragment newInstance(ArrayList<Step> stepList, int selectedPosition) {
         StepDetailFragment fragment = new StepDetailFragment();
         Bundle args = new Bundle();
-        args.putParcelable(ARG_ITEM, item);
+        args.putParcelableArrayList(ARG_STEP_LIST, stepList);
+        args.putInt(ARG_SELECTED_POSITION, selectedPosition);
         fragment.setArguments(args);
         return fragment;
     }
@@ -65,8 +72,29 @@ public class StepDetailFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         if (getArguments() != null) {
-            mItem = getArguments().getParcelable(ARG_ITEM);
+            mStepList = getArguments().getParcelableArrayList(ARG_STEP_LIST);
+            mSelectedPosition = getArguments().getInt(ARG_SELECTED_POSITION);
         }
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_step_detail, container, false);
+
+        ButterKnife.bind(this, view);
+
+        setupView();
+
+        return view;
+    }
+
+    private void setupView() {
+        tvDescription.setText(mStepList.get(mSelectedPosition).getDescription());
+
+        tvPreviouslyStep.setVisibility(mSelectedPosition == 0 ? View.GONE : View.VISIBLE);
+        tvNextStep.setVisibility(mSelectedPosition == mStepList.size() - 1 ? View.GONE : View.VISIBLE);
+
+        initializePlayer();
     }
 
     @Override
@@ -79,35 +107,6 @@ public class StepDetailFragment extends Fragment {
     public void onStop() {
         super.onStop();
         mPlayer.release();
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_step_detail, container, false);
-
-        ButterKnife.bind(this, view);
-
-        if (mItem != null) {
-            tvDescription.setText(mItem.getDescription());
-
-            initializePlayer();
-        }
-
-        tvPreviouslyStep.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Volta para item anterior
-            }
-        });
-
-        tvNextStep.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Vai para item seguinte
-            }
-        });
-
-        return view;
     }
 
     private void initializePlayer() {
@@ -127,11 +126,27 @@ public class StepDetailFragment extends Fragment {
         // Produces Extractor instances for parsing the media data.
         ExtractorsFactory extractorsFactory = new DefaultExtractorsFactory();
         // This is the MediaSource representing the media to be played.
-        MediaSource videoSource = new ExtractorMediaSource(Uri.parse(mItem.getVideoURL()), dataSourceFactory, extractorsFactory, null, null);
+        MediaSource videoSource = new ExtractorMediaSource(Uri.parse(mStepList.get(mSelectedPosition).getVideoURL()), dataSourceFactory, extractorsFactory, null, null);
         LoopingMediaSource loopingSource = new LoopingMediaSource(videoSource);
         // Prepare the player with the source.
         mPlayer.prepare(loopingSource);
         mPlayer.setPlayWhenReady(true);
+    }
+
+    @OnClick(R.id.tv_previously_step)
+    public void onPreviouslyStepClick() {
+        if (mSelectedPosition > 0) {
+            --mSelectedPosition;
+            setupView();
+        }
+    }
+
+    @OnClick(R.id.tv_next_step)
+    public void onNextStepClick() {
+        if (mSelectedPosition < mStepList.size()) {
+            mSelectedPosition++;
+            setupView();
+        }
     }
 
 }

@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.rafaelguimas.bakingapp.R;
-import com.rafaelguimas.bakingapp.models.Ingredient;
 import com.rafaelguimas.bakingapp.models.Step;
 
 import java.util.ArrayList;
@@ -25,7 +24,7 @@ public class StepsListAdapter extends RecyclerView.Adapter<StepsListAdapter.View
     private List<Step> mValues;
     private OnStepItemClick mListener;
 
-    public StepsListAdapter(ArrayList<Step> mValues, OnStepItemClick mListener) {
+    public StepsListAdapter(List<Step> mValues, OnStepItemClick mListener) {
         this.mValues = mValues;
         this.mListener = mListener;
     }
@@ -46,14 +45,14 @@ public class StepsListAdapter extends RecyclerView.Adapter<StepsListAdapter.View
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mListener.notifyOnStepItemClick(mValues.get(holder.getAdapterPosition()));
+                mListener.notifyOnStepItemClick(holder.getAdapterPosition());
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return mValues != null? mValues.size() : 0;
+        return mValues != null ? mValues.size() : 0;
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -69,6 +68,6 @@ public class StepsListAdapter extends RecyclerView.Adapter<StepsListAdapter.View
     }
 
     public interface OnStepItemClick {
-        void notifyOnStepItemClick(Step item);
+        void notifyOnStepItemClick(int selectedPosition);
     }
 }
