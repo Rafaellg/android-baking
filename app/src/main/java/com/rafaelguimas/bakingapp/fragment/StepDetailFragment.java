@@ -118,9 +118,6 @@ public class StepDetailFragment extends Fragment {
         // Create the player
         mPlayer = ExoPlayerFactory.newSimpleInstance(getContext(), trackSelector);
 
-        // Bind the player to the view.
-        exoplayer.setPlayer(mPlayer);
-
         // Produces DataSource instances through which media data is loaded.
         DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(getContext(), Util.getUserAgent(getContext(), getString(R.string.app_name)));
         // Produces Extractor instances for parsing the media data.
@@ -131,6 +128,10 @@ public class StepDetailFragment extends Fragment {
         // Prepare the player with the source.
         mPlayer.prepare(loopingSource);
         mPlayer.setPlayWhenReady(true);
+
+        // Bind the player to the view.
+        exoplayer.setPlayer(mPlayer);
+        exoplayer.setUseController(false);
     }
 
     @OnClick(R.id.tv_previously_step)

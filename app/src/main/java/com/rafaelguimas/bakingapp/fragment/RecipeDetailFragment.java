@@ -39,6 +39,14 @@ public class RecipeDetailFragment extends Fragment implements StepsListAdapter.O
     public RecipeDetailFragment() {
     }
 
+    public static RecipeDetailFragment newInstance(Recipe recipe) {
+        RecipeDetailFragment fragment = new RecipeDetailFragment();
+        Bundle arguments = new Bundle();
+        arguments.putParcelable(RecipeDetailFragment.ARG_ITEM, recipe);
+        fragment.setArguments(arguments);
+        return fragment;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -20,9 +20,9 @@ public class RecipePresenter {
     private static final String mBaseUrl = "https://d17h27t6h515a5.cloudfront.net/";
 
     public interface RecipePresenterCallback {
-        void notifyServiceSuccess(List<Recipe> recipeList);
+        void notifyGetRecipesSuccess(List<Recipe> recipeList);
 
-        void notifyServiceError();
+        void notifyGetRecipesError();
     }
 
     private RecipePresenterCallback mRecipePresenterCallback;
@@ -44,12 +44,12 @@ public class RecipePresenter {
                 response.body().get(1).setImage("http://d2gk7xgygi98cy.cloudfront.net/4-3-large.jpg");
                 response.body().get(2).setImage("https://dessertswithbenefits.com/wp-content/uploads/2014/01/33.jpg");
                 response.body().get(3).setImage("https://www.petitgastro.com.br/wp-content/uploads/2016/04/final2-Medium-1024x682.jpg");
-                mRecipePresenterCallback.notifyServiceSuccess(response.body());
+                mRecipePresenterCallback.notifyGetRecipesSuccess(response.body());
             }
 
             @Override
             public void onFailure(Call<ArrayList<Recipe>> call, Throwable t) {
-                mRecipePresenterCallback.notifyServiceError();
+                mRecipePresenterCallback.notifyGetRecipesError();
             }
         });
     }
