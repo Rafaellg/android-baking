@@ -3,8 +3,10 @@ package com.rafaelguimas.bakingapp.fragment;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.Surface;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -35,6 +37,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Optional;
 
 public class StepDetailFragment extends Fragment {
 
@@ -43,10 +46,13 @@ public class StepDetailFragment extends Fragment {
 
     @BindView(R.id.exoplayer)
     SimpleExoPlayerView exoplayer;
+    @Nullable
     @BindView(R.id.tv_description)
     TextView tvDescription;
+    @Nullable
     @BindView(R.id.tv_previously_step)
     TextView tvPreviouslyStep;
+    @Nullable
     @BindView(R.id.tv_next_step)
     TextView tvNextStep;
 
@@ -89,10 +95,13 @@ public class StepDetailFragment extends Fragment {
     }
 
     private void setupView() {
-        tvDescription.setText(mStepList.get(mSelectedPosition).getDescription());
+        int rot = getResources().getConfiguration().orientation;
+        if (rot == Surface.ROTATION_90 || rot == Surface.ROTATION_270) {
+            tvDescription.setText(mStepList.get(mSelectedPosition).getDescription());
 
-        tvPreviouslyStep.setVisibility(mSelectedPosition == 0 ? View.GONE : View.VISIBLE);
-        tvNextStep.setVisibility(mSelectedPosition == mStepList.size() - 1 ? View.GONE : View.VISIBLE);
+            tvPreviouslyStep.setVisibility(mSelectedPosition == 0 ? View.GONE : View.VISIBLE);
+            tvNextStep.setVisibility(mSelectedPosition == mStepList.size() - 1 ? View.GONE : View.VISIBLE);
+        }
 
         initializePlayer();
     }
@@ -133,6 +142,7 @@ public class StepDetailFragment extends Fragment {
         mPlayer.setPlayWhenReady(true);
     }
 
+    @Optional
     @OnClick(R.id.tv_previously_step)
     public void onPreviouslyStepClick() {
         if (mSelectedPosition > 0) {
@@ -141,6 +151,7 @@ public class StepDetailFragment extends Fragment {
         }
     }
 
+    @Optional
     @OnClick(R.id.tv_next_step)
     public void onNextStepClick() {
         if (mSelectedPosition < mStepList.size()) {

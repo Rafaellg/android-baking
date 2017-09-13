@@ -2,13 +2,11 @@ package com.rafaelguimas.bakingapp.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
 import com.rafaelguimas.bakingapp.R;
 import com.rafaelguimas.bakingapp.ToolbarControlView;
 import com.rafaelguimas.bakingapp.fragment.RecipeDetailFragment;
@@ -61,6 +59,8 @@ public class RecipeDetailActivity extends AppCompatActivity implements ToolbarCo
 
     @Override
     public void setToolbarTitle(String title) {
-        getSupportActionBar().setTitle(title);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle(title);
+        }
     }
 }
