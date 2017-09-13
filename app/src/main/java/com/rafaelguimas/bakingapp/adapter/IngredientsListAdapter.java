@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.rafaelguimas.bakingapp.R;
 import com.rafaelguimas.bakingapp.models.Ingredient;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 import butterknife.BindView;
@@ -36,8 +37,8 @@ public class IngredientsListAdapter extends RecyclerView.Adapter<IngredientsList
     public void onBindViewHolder(ViewHolder holder, int position) {
         Ingredient ingredient = mValues.get(position);
 
-        String ingredientText = holder.itemView.getContext().getString(R.string.label_ingredient_name_param, String.valueOf(ingredient.getQuantity()), ingredient.getMeasure(), ingredient.getIngredient());
-        holder.tvIngredient.setText(ingredientText);
+        DecimalFormat decimalFormat = new DecimalFormat("#.#");
+        holder.tvIngredient.setText(String.valueOf(decimalFormat.format(ingredient.getQuantity())) + " " + ingredient.getMeasure() + " " + ingredient.getIngredient());
     }
 
     @Override

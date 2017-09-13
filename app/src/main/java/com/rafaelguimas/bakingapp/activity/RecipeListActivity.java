@@ -9,6 +9,7 @@ import android.view.View;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.rafaelguimas.bakingapp.R;
+import com.rafaelguimas.bakingapp.ToolbarControlView;
 import com.rafaelguimas.bakingapp.adapter.RecipesListAdapter;
 import com.rafaelguimas.bakingapp.fragment.RecipeDetailFragment;
 import com.rafaelguimas.bakingapp.models.Recipe;
@@ -19,7 +20,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class RecipeListActivity extends AppCompatActivity implements RecipePresenter.RecipePresenterCallback, RecipesListAdapter.OnItemClick {
+public class RecipeListActivity extends AppCompatActivity implements RecipePresenter.RecipePresenterCallback, RecipesListAdapter.OnItemClick, ToolbarControlView {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -56,7 +57,7 @@ public class RecipeListActivity extends AppCompatActivity implements RecipePrese
             mRecipesPresenter = new RecipePresenter(this);
             mRecipesPresenter.getRecipes();
         } else {
-            notifyServiceSuccess(mRecipeList);
+            notifyGetRecipesSuccess(mRecipeList);
         }
     }
 
@@ -65,7 +66,7 @@ public class RecipeListActivity extends AppCompatActivity implements RecipePrese
     }
 
     @Override
-    public void notifyServiceSuccess(List<Recipe> recipeList) {
+    public void notifyGetRecipesSuccess(List<Recipe> recipeList) {
         // Hide loader
         avLoader.setVisibility(View.GONE);
 
@@ -76,7 +77,7 @@ public class RecipeListActivity extends AppCompatActivity implements RecipePrese
     }
 
     @Override
-    public void notifyServiceError() {
+    public void notifyGetRecipesError() {
         // Show empty animation
         avLoader.setAnimation("shrug.json");
     }
@@ -97,5 +98,10 @@ public class RecipeListActivity extends AppCompatActivity implements RecipePrese
 
             startActivity(intent);
         }
+    }
+
+    @Override
+    public void setToolbarTitle(String title) {
+        getSupportActionBar().setTitle(title);
     }
 }
