@@ -2,6 +2,13 @@
 <resources>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="app_bar_height">200dp</dimen>
-    <dimen name="item_width">200dp</dimen>
+    <dimen name="item_width">300dp</dimen>
     <dimen name="text_margin">16dp</dimen>
+
+    <dimen name="material_0x">4dp</dimen>
+    <dimen name="material_1x">8dp</dimen>
+    <dimen name="material_2x">16dp</dimen>
+    <dimen name="material_3x">32dp</dimen>
+    <dimen name="material_4x">64dp</dimen>
+    <dimen name="material_5x">128dp</dimen>
 </resources>

@@ -110,7 +110,7 @@ public class RecipeDetailFragment extends Fragment implements StepsListAdapter.O
     public void notifyOnStepItemClick(int selectedPosition) {
         getFragmentManager()
                 .beginTransaction()
-                .replace(R.id.recipe_detail_container, StepDetailFragment.newInstance(new ArrayList<>(mRecipe.getSteps()), selectedPosition))
+                .replace(R.id.step_detail_container, StepDetailFragment.newInstance(new ArrayList<>(mRecipe.getSteps()), selectedPosition))
                 .addToBackStack(null)
                 .commit();
     }

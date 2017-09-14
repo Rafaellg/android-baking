@@ -13,24 +13,25 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".activity.RecipeListActivity"
+            android:name=".activity.RecipeDetailActivity"
             android:label="@string/label_recipes"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.StepDetailActivity"
+            android:label="@string/title_recipe_detail"
+            android:parentActivityName=".activity.RecipeDetailActivity"
             android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.rafaelguimas.bakingapp.activity.RecipeDetailActivity"
+                tools:replace="android:value" />
+        </activity>
+        <activity android:name=".activity.RecipeListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity
-            android:name=".activity.RecipeDetailActivity"
-            android:label="@string/title_recipe_detail"
-            android:parentActivityName=".activity.RecipeListActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                tools:replace="android:value"
-                android:value="com.rafaelguimas.bakingapp.activity.RecipeListActivity" />
         </activity>
     </application>
 

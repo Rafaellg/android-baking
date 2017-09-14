@@ -22,16 +22,12 @@ import butterknife.ButterKnife;
 
 public class RecipeListActivity extends AppCompatActivity implements RecipePresenter.RecipePresenterCallback, RecipesListAdapter.OnItemClick, ToolbarControlView {
 
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
-    @BindView(R.id.recipe_list)
-    RecyclerView recyclerView;
+    @BindView(R.id.rv_recipes)
+    RecyclerView rv_recipes;
     @BindView(R.id.av_loader)
     LottieAnimationView avLoader;
 
-    private boolean mTwoPane;
     private List<Recipe> mRecipeList;
-
     private RecipePresenter mRecipesPresenter;
 
     @Override
@@ -41,18 +37,7 @@ public class RecipeListActivity extends AppCompatActivity implements RecipePrese
 
         ButterKnife.bind(this);
 
-        setSupportActionBar(toolbar);
-        toolbar.setTitle(getTitle());
-
-        if (findViewById(R.id.recipe_detail_container) != null) {
-            // The detail container view will be present only in the
-            // large-screen layouts (res/values-w900dp).
-            // If this view is present, then the
-            // activity should be in two-pane mode.
-            mTwoPane = true;
-        }
-
-        // Call service
+        // Call the recipes service
         if (mRecipeList == null) {
             mRecipesPresenter = new RecipePresenter(this);
             mRecipesPresenter.getRecipes();
@@ -61,19 +46,17 @@ public class RecipeListActivity extends AppCompatActivity implements RecipePrese
         }
     }
 
-    private void setupRecyclerView(List<Recipe> recipeList) {
-        recyclerView.setAdapter(new RecipesListAdapter(recipeList, this));
-    }
-
     @Override
     public void notifyGetRecipesSuccess(List<Recipe> recipeList) {
         // Hide loader
         avLoader.setVisibility(View.GONE);
 
+        // Saves the list
         mRecipeList = recipeList;
 
-        assert recyclerView != null;
-        setupRecyclerView(recipeList);
+        // Sets up the RV
+        assert rv_recipes != null;
+        rv_recipes.setAdapter(new RecipesListAdapter(recipeList, this));
     }
 
     @Override
@@ -84,20 +67,9 @@ public class RecipeListActivity extends AppCompatActivity implements RecipePrese
 
     @Override
     public void notifyOnRecipeItemClick(Recipe recipe) {
-        if (mTwoPane) {
-            Bundle arguments = new Bundle();
-            arguments.putParcelable(RecipeDetailFragment.ARG_ITEM, recipe);
-            RecipeDetailFragment fragment = new RecipeDetailFragment();
-            fragment.setArguments(arguments);
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.recipe_detail_container, fragment)
-                    .commit();
-        } else {
-            Intent intent = new Intent(this, RecipeDetailActivity.class);
-            intent.putExtra(RecipeDetailFragment.ARG_ITEM, recipe);
-
-            startActivity(intent);
-        }
+        Intent intent = new Intent(this, RecipeDetailActivity.class);
+        intent.putExtra(RecipeDetailActivity.ARG_ITEM, recipe);
+        startActivity(intent);
     }
 
     @Override
