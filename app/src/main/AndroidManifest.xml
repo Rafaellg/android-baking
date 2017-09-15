@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     package="com.rafaelguimas.bakingapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -12,21 +11,13 @@
         android:roundIcon="@drawable/ic_cupcake"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity
-            android:name=".activity.RecipeDetailActivity"
-            android:label="@string/label_recipes"
-            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".activity.RecipeDetailActivity" />
         <activity
             android:name=".activity.StepDetailActivity"
-            android:label="@string/title_recipe_detail"
-            android:parentActivityName=".activity.RecipeDetailActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.rafaelguimas.bakingapp.activity.RecipeDetailActivity"
-                tools:replace="android:value" />
-        </activity>
-        <activity android:name=".activity.RecipeListActivity">
+            android:label="@string/title_step" />
+        <activity
+            android:name=".activity.RecipeListActivity"
+            android:label="@string/title_recipes">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

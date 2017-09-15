@@ -4,14 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.rafaelguimas.bakingapp.R;
-import com.rafaelguimas.bakingapp.ToolbarControlView;
 import com.rafaelguimas.bakingapp.adapter.RecipesListAdapter;
-import com.rafaelguimas.bakingapp.fragment.RecipeDetailFragment;
 import com.rafaelguimas.bakingapp.models.Recipe;
 import com.rafaelguimas.bakingapp.network.RecipePresenter;
 
@@ -20,7 +17,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class RecipeListActivity extends AppCompatActivity implements RecipePresenter.RecipePresenterCallback, RecipesListAdapter.OnItemClick, ToolbarControlView {
+public class RecipeListActivity extends AppCompatActivity implements RecipePresenter.RecipePresenterCallback, RecipesListAdapter.OnItemClick {
 
     @BindView(R.id.rv_recipes)
     RecyclerView rv_recipes;
@@ -70,10 +67,5 @@ public class RecipeListActivity extends AppCompatActivity implements RecipePrese
         Intent intent = new Intent(this, RecipeDetailActivity.class);
         intent.putExtra(RecipeDetailActivity.ARG_ITEM, recipe);
         startActivity(intent);
-    }
-
-    @Override
-    public void setToolbarTitle(String title) {
-        getSupportActionBar().setTitle(title);
     }
 }
