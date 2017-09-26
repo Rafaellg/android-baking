@@ -83,17 +83,17 @@ public class RecipeDetailActivity extends AppCompatActivity implements ToolbarCo
             rvSteps.setAdapter(stepsListAdapter);
             rvSteps.setLayoutManager(new LinearLayoutManager(this));
         }
+
+        if (mTwoPane) {
+            notifyOnStepItemClick(0);
+        }
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == android.R.id.home) {
-            if (mTwoPane) {
-                onBackPressed();
-            } else {
-                navigateUpTo(new Intent(this, RecipeDetailActivity.class));
-            }
+            navigateUpTo(new Intent(this, RecipeDetailActivity.class));
             return true;
         }
         return super.onOptionsItemSelected(item);

@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
-import android.view.Surface;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -46,7 +45,6 @@ public class StepDetailFragment extends Fragment {
 
     @BindView(R.id.exoplayer)
     SimpleExoPlayerView exoplayer;
-    @Nullable
     @BindView(R.id.tv_description)
     TextView tvDescription;
     @Nullable
@@ -95,27 +93,36 @@ public class StepDetailFragment extends Fragment {
     }
 
     private void setupView() {
-        int rot = getResources().getConfiguration().orientation;
-        if (rot == Surface.ROTATION_90 || rot == Surface.ROTATION_270) {
-            tvDescription.setText(mStepList.get(mSelectedPosition).getDescription());
+        tvDescription.setText(mStepList.get(mSelectedPosition).getDescription());
 
+        if (tvPreviouslyStep != null && tvNextStep != null) {
             tvPreviouslyStep.setVisibility(mSelectedPosition == 0 ? View.GONE : View.VISIBLE);
             tvNextStep.setVisibility(mSelectedPosition == mStepList.size() - 1 ? View.GONE : View.VISIBLE);
         }
 
-        initializePlayer();
+        if (!mStepList.get(mSelectedPosition).getVideoURL().equals("")) {
+            initializePlayer();
+        } else {
+            exoplayer.setVisibility(View.GONE);
+        }
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        mPlayer.release();
+
+        if (mPlayer != null) {
+            mPlayer.release();
+        }
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        mPlayer.release();
+
+        if (mPlayer != null) {
+            mPlayer.release();
+        }
     }
 
     private void initializePlayer() {

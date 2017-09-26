@@ -11,4 +11,6 @@
     <dimen name="material_3x">32dp</dimen>
     <dimen name="material_4x">64dp</dimen>
     <dimen name="material_5x">128dp</dimen>
+
+    <integer name="recipe_list_cols">1</integer>
 </resources>

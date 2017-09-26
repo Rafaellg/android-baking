@@ -3,6 +3,7 @@ package com.rafaelguimas.bakingapp.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
@@ -20,7 +21,7 @@ import butterknife.ButterKnife;
 public class RecipeListActivity extends AppCompatActivity implements RecipePresenter.RecipePresenterCallback, RecipesListAdapter.OnItemClick {
 
     @BindView(R.id.rv_recipes)
-    RecyclerView rv_recipes;
+    RecyclerView rvRecipes;
     @BindView(R.id.av_loader)
     LottieAnimationView avLoader;
 
@@ -52,8 +53,9 @@ public class RecipeListActivity extends AppCompatActivity implements RecipePrese
         mRecipeList = recipeList;
 
         // Sets up the RV
-        assert rv_recipes != null;
-        rv_recipes.setAdapter(new RecipesListAdapter(recipeList, this));
+        assert rvRecipes != null;
+        rvRecipes.setAdapter(new RecipesListAdapter(recipeList, this));
+        rvRecipes.setLayoutManager(new GridLayoutManager(this, getResources().getInteger(R.integer.recipe_list_cols)));
     }
 
     @Override
