@@ -64,7 +64,10 @@ public class RecipeDetailActivity extends AppCompatActivity implements ToolbarCo
         }
 
         // Set the background image
-        Glide.with(this).load(mRecipe.getImage()).into(ivBackground);
+        Glide.with(this)
+                .load(mRecipe.getImage())
+                .placeholder(R.drawable.img_food_placeholder_repeat)
+                .into(ivBackground);
 
         if (mRecipe.getIngredients() != null) {
             // Create the adapters

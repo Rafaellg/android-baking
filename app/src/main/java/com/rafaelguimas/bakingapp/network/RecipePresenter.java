@@ -18,13 +18,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RecipePresenter {
 
     private static final String mBaseUrl = "https://d17h27t6h515a5.cloudfront.net/";
-
-    public interface RecipePresenterCallback {
-        void notifyGetRecipesSuccess(List<Recipe> recipeList);
-
-        void notifyGetRecipesError();
-    }
-
     private RecipePresenterCallback mRecipePresenterCallback;
 
     public RecipePresenter(RecipePresenterCallback callback) {
@@ -37,7 +30,7 @@ public class RecipePresenter {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        retrofit.create(RecipesService.class).getRecipes().enqueue(new Callback<ArrayList<Recipe>>() {
+        retrofit.create(RecipesEndpoints.class).getRecipes().enqueue(new Callback<ArrayList<Recipe>>() {
             @Override
             public void onResponse(Call<ArrayList<Recipe>> call, Response<ArrayList<Recipe>> response) {
                 response.body().get(0).setImage("http://del.h-cdn.co/assets/16/32/1600x800/landscape-1470773544-delish-nutella-cool-whip-pie-1.jpg");
@@ -52,5 +45,11 @@ public class RecipePresenter {
                 mRecipePresenterCallback.notifyGetRecipesError();
             }
         });
+    }
+
+    public interface RecipePresenterCallback {
+        void notifyGetRecipesSuccess(List<Recipe> recipeList);
+
+        void notifyGetRecipesError();
     }
 }

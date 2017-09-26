@@ -41,7 +41,10 @@ public class RecipesListAdapter extends RecyclerView.Adapter<RecipesListAdapter.
         holder.mItem = mValues.get(position);
 
         holder.mTvRecipeTitle.setText(mValues.get(position).getName());
-        Glide.with(holder.itemView.getContext()).load(holder.mItem.getImage()).into(holder.ivBackground);
+        Glide.with(holder.itemView.getContext())
+                .load(holder.mItem.getImage())
+                .placeholder(R.drawable.img_food_placeholder_repeat)
+                .into(holder.ivBackground);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

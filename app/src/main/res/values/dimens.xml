@@ -13,4 +13,10 @@
     <dimen name="material_5x">128dp</dimen>
 
     <integer name="recipe_list_cols">1</integer>
+
+    <!--
+Refer to App Widget Documentation for margin information
+http://developer.android.com/guide/topics/appwidgets/index.html#CreatingLayout
+    -->
+    <dimen name="widget_margin">8dp</dimen>
 </resources>

@@ -110,22 +110,18 @@ public class StepDetailFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-
-        if (mPlayer != null) {
-            mPlayer.release();
-        }
+        releasePlayer();
     }
 
     @Override
     public void onStop() {
         super.onStop();
-
-        if (mPlayer != null) {
-            mPlayer.release();
-        }
+        releasePlayer();
     }
 
     private void initializePlayer() {
+        exoplayer.setVisibility(View.VISIBLE);
+
         // Create a default TrackSelector
         BandwidthMeter bandwidthMeter = new DefaultBandwidthMeter();
         TrackSelection.Factory videoTrackSelectionFactory = new AdaptiveTrackSelection.Factory(bandwidthMeter);
@@ -150,11 +146,18 @@ public class StepDetailFragment extends Fragment {
         exoplayer.setUseController(false);
     }
 
+    private void releasePlayer() {
+        if (mPlayer != null) {
+            mPlayer.release();
+        }
+    }
+
     @Optional
     @OnClick(R.id.tv_previously_step)
     public void onPreviouslyStepClick() {
         if (mSelectedPosition > 0) {
             --mSelectedPosition;
+            releasePlayer();
             setupView();
         }
     }
@@ -164,6 +167,7 @@ public class StepDetailFragment extends Fragment {
     public void onNextStepClick() {
         if (mSelectedPosition < mStepList.size()) {
             mSelectedPosition++;
+            releasePlayer();
             setupView();
         }
     }
