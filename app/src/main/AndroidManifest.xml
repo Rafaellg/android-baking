@@ -25,7 +25,7 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name=".widget.WidgetProvider">
+        <receiver android:name=".widget.RecipeWidgetProvider">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -36,8 +36,8 @@
         </receiver>
 
         <service
-            android:name=".widget.RecipesIntentService"
-            android:exported="false"></service>
+            android:name=".widget.RecipeIntentService"
+            android:exported="false" />
     </application>
 
 </manifest>
