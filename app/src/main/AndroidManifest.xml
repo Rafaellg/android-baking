@@ -38,6 +38,10 @@
         <service
             android:name=".widget.RecipeIntentService"
             android:exported="false" />
+
+        <service
+            android:name=".widget.RecipeWidgetRemoteViewsService"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
     </application>
 
 </manifest>

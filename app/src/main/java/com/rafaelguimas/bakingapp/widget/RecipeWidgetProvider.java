@@ -13,6 +13,7 @@ import android.widget.RemoteViews;
 import com.rafaelguimas.bakingapp.R;
 import com.rafaelguimas.bakingapp.models.Recipe;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -48,9 +49,11 @@ public class RecipeWidgetProvider extends AppWidgetProvider {
         mPosition = position;
         Recipe recipe = mRecipeList.get(position);
 
+        // Create the RemoteViews
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.home_widget);
         views.setTextViewText(R.id.tv_recipe_title, recipe.getName());
 
+        // Set's up the previously action
         if (position > 0) {
             views.setViewVisibility(R.id.iv_previously, View.VISIBLE);
             Intent previouslyIntent = new Intent(context, mClass);
@@ -61,6 +64,7 @@ public class RecipeWidgetProvider extends AppWidgetProvider {
             views.setViewVisibility(R.id.iv_previously, View.GONE);
         }
 
+        // Set's up the next action
         if (position < mRecipeList.size() - 1) {
             views.setViewVisibility(R.id.iv_next, View.VISIBLE);
             Intent nextIntent = new Intent(context, mClass);
@@ -70,6 +74,11 @@ public class RecipeWidgetProvider extends AppWidgetProvider {
         } else {
             views.setViewVisibility(R.id.iv_next, View.GONE);
         }
+
+        // Set's up the listview
+        Intent adapterIntent = new Intent(context, RecipeWidgetRemoteViewsService.class);
+        adapterIntent.putParcelableArrayListExtra(RecipeWidgetRemoteViewsService.EXTRA_STEP_LIST, new ArrayList<>(recipe.getSteps()));
+        views.setRemoteAdapter(R.id.lv_ingredients, adapterIntent);
 
         appWidgetManager.updateAppWidget(appWidgetId, views);
 
