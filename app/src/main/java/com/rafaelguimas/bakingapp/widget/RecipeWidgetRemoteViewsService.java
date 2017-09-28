@@ -9,10 +9,8 @@ import android.widget.RemoteViewsService;
 
 public class RecipeWidgetRemoteViewsService extends RemoteViewsService {
 
-    public static final String EXTRA_STEP_LIST = "STEP_LIST";
-
     @Override
     public RemoteViewsFactory onGetViewFactory(Intent intent) {
-        return new StepViewsFactory(this.getApplicationContext(), intent);
+        return new StepViewsFactory(this.getApplicationContext());
     }
 }

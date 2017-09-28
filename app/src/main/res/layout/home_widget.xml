@@ -13,8 +13,8 @@
 
         <ImageView
             android:id="@+id/iv_previously"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:rotation="180"
             android:src="@drawable/ic_keyboard_arrow_right_black_24dp"
             android:tint="@android:color/white" />
@@ -23,28 +23,29 @@
             android:id="@+id/tv_recipe_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
             android:layout_weight="1"
             android:gravity="center"
             android:text="@string/appwidget_text"
             android:textColor="@android:color/white"
-            android:textSize="22sp"
+            android:textSize="18sp"
             android:textStyle="bold" />
 
         <ImageView
             android:id="@+id/iv_next"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:src="@drawable/ic_keyboard_arrow_right_black_24dp"
             android:tint="@android:color/white" />
 
     </LinearLayout>
 
     <ListView
-        android:layout_marginTop="@dimen/material_2x"
+        android:layout_marginTop="@dimen/material_1x"
         android:id="@+id/lv_ingredients"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/steps_list_content"/>
+        tools:listitem="@layout/item_widget_step_list"/>
 
 </LinearLayout>

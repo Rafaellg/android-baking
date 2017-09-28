@@ -18,12 +18,9 @@ public class StepViewsFactory implements RemoteViewsService.RemoteViewsFactory {
 
     private Context mContext;
     private List<Step> mStepList;
-    private Intent mIntent;
 
-    public StepViewsFactory(Context applicationContext, Intent intent) {
+    public StepViewsFactory(Context applicationContext) {
         mContext = applicationContext;
-        mIntent = intent;
-        mStepList = intent.getParcelableArrayListExtra(RecipeWidgetRemoteViewsService.EXTRA_STEP_LIST);
     }
 
     @Override
@@ -33,7 +30,7 @@ public class StepViewsFactory implements RemoteViewsService.RemoteViewsFactory {
 
     @Override
     public void onDataSetChanged() {
-        mStepList = mIntent.getParcelableArrayListExtra(RecipeWidgetRemoteViewsService.EXTRA_STEP_LIST);
+        mStepList = RecipeWidgetProvider.getStepsFromRecipe();
     }
 
     @Override
@@ -43,14 +40,14 @@ public class StepViewsFactory implements RemoteViewsService.RemoteViewsFactory {
 
     @Override
     public int getCount() {
-        return mStepList.size();
+        return mStepList == null ? 0 : mStepList.size();
     }
 
     @Override
     public RemoteViews getViewAt(int position) {
         Step step = mStepList.get(position);
 
-        RemoteViews row = new RemoteViews(mContext.getPackageName(), R.layout.steps_list_content);
+        RemoteViews row = new RemoteViews(mContext.getPackageName(), R.layout.item_widget_step_list);
 
         row.setTextViewText(R.id.tv_id, step.getId().toString());
         row.setTextViewText(R.id.tv_short_description, step.getShortDescription());

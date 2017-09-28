@@ -11,9 +11,10 @@ import android.view.View;
 import android.widget.RemoteViews;
 
 import com.rafaelguimas.bakingapp.R;
+import com.rafaelguimas.bakingapp.activity.RecipeDetailActivity;
 import com.rafaelguimas.bakingapp.models.Recipe;
+import com.rafaelguimas.bakingapp.models.Step;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -37,6 +38,10 @@ public class RecipeWidgetProvider extends AppWidgetProvider {
 
     public static void setRecipeList(List<Recipe> recipeList) {
         mRecipeList = recipeList;
+    }
+
+    public static List<Step> getStepsFromRecipe() {
+        return mRecipeList.get(mPosition).getSteps();
     }
 
     public static void updateAppWidgets(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds, int position) {
@@ -77,7 +82,6 @@ public class RecipeWidgetProvider extends AppWidgetProvider {
 
         // Set's up the listview
         Intent adapterIntent = new Intent(context, RecipeWidgetRemoteViewsService.class);
-        adapterIntent.putParcelableArrayListExtra(RecipeWidgetRemoteViewsService.EXTRA_STEP_LIST, new ArrayList<>(recipe.getSteps()));
         views.setRemoteAdapter(R.id.lv_ingredients, adapterIntent);
 
         appWidgetManager.updateAppWidget(appWidgetId, views);
@@ -98,6 +102,16 @@ public class RecipeWidgetProvider extends AppWidgetProvider {
             case ACTION_PREVIOUSLY:
                 --mPosition;
                 updateAppWidgets(context, appWidgetManager, appWidgetsId, mPosition);
+                break;
+        }
+
+        switch (intent.getAction()) {
+            case ACTION_NEXT:
+            case ACTION_PREVIOUSLY:
+                // refresh all your widgets
+                AppWidgetManager mgr = AppWidgetManager.getInstance(context);
+                ComponentName cn = new ComponentName(context, RecipeWidgetProvider.class);
+                mgr.notifyAppWidgetViewDataChanged(mgr.getAppWidgetIds(cn), R.id.lv_ingredients);
                 break;
         }
 
