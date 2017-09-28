@@ -6,12 +6,13 @@ import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.TaskStackBuilder;
 import android.util.Log;
 import android.view.View;
 import android.widget.RemoteViews;
 
 import com.rafaelguimas.bakingapp.R;
-import com.rafaelguimas.bakingapp.activity.RecipeDetailActivity;
+import com.rafaelguimas.bakingapp.activity.StepDetailActivity;
 import com.rafaelguimas.bakingapp.models.Recipe;
 import com.rafaelguimas.bakingapp.models.Step;
 
@@ -83,6 +84,13 @@ public class RecipeWidgetProvider extends AppWidgetProvider {
         // Set's up the listview
         Intent adapterIntent = new Intent(context, RecipeWidgetRemoteViewsService.class);
         views.setRemoteAdapter(R.id.lv_ingredients, adapterIntent);
+
+        // template to handle the click listener for each item
+        Intent clickIntentTemplate = new Intent(context, StepDetailActivity.class);
+        PendingIntent clickPendingIntentTemplate = TaskStackBuilder.create(context)
+                .addNextIntentWithParentStack(clickIntentTemplate)
+                .getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+        views.setPendingIntentTemplate(R.id.lv_ingredients, clickPendingIntentTemplate);
 
         appWidgetManager.updateAppWidget(appWidgetId, views);
 

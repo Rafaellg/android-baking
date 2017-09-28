@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/colorAccent"
+    android:id="@+id/ll_container"
     android:orientation="horizontal"
     android:paddingBottom="@dimen/material_1x"
     android:paddingLeft="@dimen/material_2x"

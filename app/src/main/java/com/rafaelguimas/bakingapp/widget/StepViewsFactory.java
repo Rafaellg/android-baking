@@ -2,12 +2,15 @@ package com.rafaelguimas.bakingapp.widget;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Parcelable;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
 import com.rafaelguimas.bakingapp.R;
+import com.rafaelguimas.bakingapp.activity.StepDetailActivity;
 import com.rafaelguimas.bakingapp.models.Step;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -51,6 +54,11 @@ public class StepViewsFactory implements RemoteViewsService.RemoteViewsFactory {
 
         row.setTextViewText(R.id.tv_id, step.getId().toString());
         row.setTextViewText(R.id.tv_short_description, step.getShortDescription());
+
+        Intent fillInIntent = new Intent();
+        fillInIntent.putParcelableArrayListExtra(StepDetailActivity.ARG_STEP_LIST, new ArrayList<Parcelable>(mStepList));
+        fillInIntent.putExtra(StepDetailActivity.ARG_SELECTED_POSITION, position);
+        row.setOnClickFillInIntent(R.id.ll_container, fillInIntent);
 
         return (row);
     }
