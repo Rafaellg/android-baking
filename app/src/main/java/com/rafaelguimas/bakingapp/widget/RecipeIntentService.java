@@ -22,11 +22,6 @@ import java.util.List;
 public class RecipeIntentService extends IntentService implements RecipePresenter.RecipePresenterCallback {
 
     public static final String ACTION_FETCH_RECIPES = "com.rafaelguimas.bakingapp.widget.action.FETCH_RECIPES";
-    public static final String EXTRA_NEXT = "com.rafaelguimas.bakingapp.widget.extra.NEXT";
-    public static final String EXTRA_CURRENT_RECIPE = "com.rafaelguimas.bakingapp.widget.extra.CURRENT_RECIPE";
-
-    private Recipe mCurrentRecipe;
-    private boolean isNext;
 
     public RecipeIntentService() {
         super("RecipeIntentService");
@@ -43,7 +38,7 @@ public class RecipeIntentService extends IntentService implements RecipePresente
         if (intent != null) {
             final String action = intent.getAction();
             if (ACTION_FETCH_RECIPES.equals(action)) {
-                new RecipePresenter(this).getRecipes();
+                new RecipePresenter(this).getRecipes(null);
             }
         }
     }

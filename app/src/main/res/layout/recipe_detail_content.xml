@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorBackground"
+    android:id="@+id/sv_recipe_detail"
     tools:context="com.rafaelguimas.bakingapp.activity.RecipeDetailActivity">
 
     <LinearLayout
