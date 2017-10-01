@@ -56,7 +56,7 @@ public class RecipeWidgetProvider extends AppWidgetProvider {
         Recipe recipe = mRecipeList.get(position);
 
         // Create the RemoteViews
-        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.home_widget);
+        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.recipe_widget);
         views.setTextViewText(R.id.tv_recipe_title, recipe.getName());
 
         // Set's up the previously action

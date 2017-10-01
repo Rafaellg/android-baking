@@ -20,7 +20,6 @@ import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static org.hamcrest.core.AllOf.allOf;
 
 @RunWith(AndroidJUnit4.class)
 public class RecipeListActivityTest {
@@ -46,12 +45,13 @@ public class RecipeListActivityTest {
 
     @Test
     public void recipeListActivityTest() {
-        onView(allOf(withId(R.id.rv_recipes), isDisplayed()));
+        // Check if recipe list is displayed
+        onView(withId(R.id.rv_recipes)).check(matches(isDisplayed()));
 
-        onView(withId(R.id.rv_recipes))
-                .perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
+        // Select the first recipe
+        onView(withId(R.id.rv_recipes)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
 
-        onView(withId(R.id.sv_recipe_detail))
-                .check(matches(isDisplayed()));
+        // Check if recipe detail is displayed
+        onView(withId(R.id.sv_recipe_detail)).check(matches(isDisplayed()));
     }
 }

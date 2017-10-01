@@ -20,11 +20,12 @@ import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static org.hamcrest.core.AllOf.allOf;
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
 @RunWith(AndroidJUnit4.class)
 public class RecipeDetailActivityTest {
 
+    private Recipe mRecipe = Recipe.mockObject();
     @Rule
     public ActivityTestRule<RecipeDetailActivity> mActivityRule =
             new ActivityTestRule<RecipeDetailActivity>(RecipeDetailActivity.class) {
@@ -32,20 +33,28 @@ public class RecipeDetailActivityTest {
                 protected Intent getActivityIntent() {
                     Context targetContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
                     Intent result = new Intent(targetContext, RecipeDetailActivity.class);
-                    result.putExtra(RecipeDetailActivity.ARG_ITEM, Recipe.mockObject());
+                    result.putExtra(RecipeDetailActivity.ARG_ITEM, mRecipe);
                     return result;
                 }
             };
+    private int mSelectPosition = 0;
 
     @Test
     public void recipeDetailActivityTest() {
-        onView(allOf(withId(R.id.rv_ingredients), isDisplayed()));
-        onView(allOf(withId(R.id.rv_steps), isDisplayed()));
+        // Check if ingredient and step list are displayed
+        onView(withId(R.id.rv_ingredients)).check(matches(isDisplayed()));
+        onView(withId(R.id.rv_steps)).check(matches(isDisplayed()));
 
-        onView(withId(R.id.rv_steps))
-                .perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
+        // Select the first step
+        onView(withId(R.id.rv_steps)).perform(RecyclerViewActions.actionOnItemAtPosition(mSelectPosition, click()));
 
-        onView(withId(R.id.cv_step_detail))
-                .check(matches(isDisplayed()));
+        // Check if detail view is displayed
+        onView(withId(R.id.cv_step_detail)).check(matches(isDisplayed()));
+
+        // Check if description is displayed
+        onView(withId(R.id.tv_description)).check(matches(isDisplayed()));
+
+        // Check if description is correct
+        onView(withId(R.id.tv_description)).check(matches(withText(mRecipe.getSteps().get(mSelectPosition).getDescription())));
     }
 }
