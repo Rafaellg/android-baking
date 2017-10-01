@@ -9,11 +9,43 @@ import android.os.Parcelable;
 
 public class Step implements Parcelable {
 
+    @SuppressWarnings("unused")
+    public static final Parcelable.Creator<Step> CREATOR = new Parcelable.Creator<Step>() {
+        @Override
+        public Step createFromParcel(Parcel in) {
+            return new Step(in);
+        }
+
+        @Override
+        public Step[] newArray(int size) {
+            return new Step[size];
+        }
+    };
     private Integer id;
     private String shortDescription;
     private String description;
     private String videoURL;
     private String thumbnailURL;
+
+    public Step(Integer id, String shortDescription, String description, String videoURL, String thumbnailURL) {
+        this.id = id;
+        this.shortDescription = shortDescription;
+        this.description = description;
+        this.videoURL = videoURL;
+        this.thumbnailURL = thumbnailURL;
+    }
+
+    protected Step(Parcel in) {
+        id = in.readByte() == 0x00 ? null : in.readInt();
+        shortDescription = in.readString();
+        description = in.readString();
+        videoURL = in.readString();
+        thumbnailURL = in.readString();
+    }
+
+    static Step mockObject() {
+        return new Step(1, "Short description", "Description", "https://d17h27t6h515a5.cloudfront.net/topher/2017/April/58ffd974_-intro-creampie/-intro-creampie.mp4", "");
+    }
 
     public Integer getId() {
         return id;
@@ -55,19 +87,6 @@ public class Step implements Parcelable {
         this.thumbnailURL = thumbnailURL;
     }
 
-    public Step(Integer id, String shortDescription) {
-        this.id = id;
-        this.shortDescription = shortDescription;
-    }
-
-    protected Step(Parcel in) {
-        id = in.readByte() == 0x00 ? null : in.readInt();
-        shortDescription = in.readString();
-        description = in.readString();
-        videoURL = in.readString();
-        thumbnailURL = in.readString();
-    }
-
     @Override
     public int describeContents() {
         return 0;
@@ -86,17 +105,4 @@ public class Step implements Parcelable {
         dest.writeString(videoURL);
         dest.writeString(thumbnailURL);
     }
-
-    @SuppressWarnings("unused")
-    public static final Parcelable.Creator<Step> CREATOR = new Parcelable.Creator<Step>() {
-        @Override
-        public Step createFromParcel(Parcel in) {
-            return new Step(in);
-        }
-
-        @Override
-        public Step[] newArray(int size) {
-            return new Step[size];
-        }
-    };
 }
